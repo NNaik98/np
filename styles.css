@@ -1,0 +1,964 @@
+/* General Body and HTML Reset */
+:root {
+    --primary-color: #a03a3a; /* Deep romantic red/maroon */
+    --secondary-color: #e0a3af; /* Soft blush pink/rose */
+    --accent-color: #5cb85c; /* Green for calendar button */
+    --text-dark: #333;
+    --text-light: #666;
+    --bg-light: #fef8f8; /* Light pinkish background */
+    --bg-dark: #f0f0f0;
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-medium: rgba(0, 0, 0, 0.2);
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Roboto', sans-serif;
+    --font-accent: 'Dancing Script', cursive;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* UNCOMMENTED */
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: #fff;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+section {
+    padding: 60px 0;
+    text-align: center;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-heading);
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 4rem;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 3rem;
+    margin-bottom: 40px;
+    position: relative;
+    display: inline-block;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -10px;
+    width: 60px;
+    height: 3px;
+    background-color: var(--secondary-color);
+    border-radius: 2px;
+}
+
+h3 {
+    font-size: 2rem;
+}
+
+/* --- Hero Section - CORRECTED --- */
+.hero {
+    height: 100vh;
+    background-image: url('images/background.jpg'); /* Use hero_bg.jpg for the background */
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    overflow: hidden;
+    animation: panBackground 30s infinite alternate linear;
+}
+
+/* Keyframes for subtle background pan */
+@keyframes panBackground {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+    gap: 30px; /* Added gap for spacing between image and text */
+    padding: 20px;
+}
+
+.hero-image {
+    width: 200px; /* Smaller image in hero for this design */
+    height: 200px;
+    border-radius: 50%; /* Make it round */
+    overflow: hidden;
+    border: 5px solid var(--secondary-color); /* Border color */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    opacity: 0; /* Starts hidden for JS animation */
+    transform: translateY(-50px); /* Starts up for JS animation */
+}
+.hero-image.show {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 1s ease-out 0.5s, transform 1s ease-out 0.5s;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-text {
+    text-align: center;
+    opacity: 0; /* Starts hidden for JS animation */
+    transform: translateY(20px); /* Starts down for JS animation */
+}
+.hero-text.show {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 1s ease-out 1s, transform 1s ease-out 1s;
+}
+
+.hero-text h1 {
+    font-family: var(--font-accent); /* Dancing Script */
+    font-size: 4rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    color: white; /* Make text white for contrast */
+}
+.hero-text h1 .amp { /* Styling for the ampersand */
+    font-family: var(--font-accent);
+    font-size: 1.2em;
+    vertical-align: middle;
+    color: var(--secondary-color);
+    margin: 0 10px;
+}
+
+.hero-text .tagline { /* Using tagline for the welcome text */
+    font-family: var(--font-heading); /* Playfair Display */
+    font-size: 1.8rem;
+    color: #f0f0f0; /* Light gray for welcome text */
+    margin-bottom: 15px;
+    font-weight: 400;
+}
+
+.hero-text .date { /* New date text in hero */
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.hero-button {
+    background-color: var(--primary-color); /* Matches your primary color */
+    border: none;
+    color: white;
+    padding: 0.8rem 2.5rem;
+    font-size: 1.3rem;
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 0; /* Starts hidden for JS animation */
+    transform: translateY(20px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+.hero-button.show {
+    opacity: 1;
+    transform: translateY(0);
+    animation: pulse 1.5s infinite alternate; /* Keep pulse animation */
+    transition: opacity 1s ease-out 1.2s, transform 1s ease-out 1.2s;
+}
+
+.hero-button:hover {
+    background-color: #b83232;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+
+.scroll-down-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.scroll-down-indicator span {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
+    transform: rotate(45deg);
+    margin: 3px;
+    animation: scrollDown 1.5s infinite;
+    opacity: 0;
+}
+
+.scroll-down-indicator span:nth-child(1) { animation-delay: 0.1s; }
+.scroll-down-indicator span:nth-child(2) { animation-delay: 0.3s; }
+.scroll-down-indicator span:nth-child(3) { animation-delay: 0.5s; }
+
+/* --- General Animations (used by JS Intersection Observer) --- */
+.animate-slide-up {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.animate-slide-up.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.animate-fade-in {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+}
+.animate-fade-in.show {
+    opacity: 1;
+}
+
+/* --- Keyframes (for hero, buttons, scroll-down) --- */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideInDown { from { transform: translateY(-50px); } to { transform: translateY(0); } }
+@keyframes slideInUp { from { transform: translateY(50px); } to { transform: translateY(0); } }
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+@keyframes scrollDown {
+    0% { opacity: 0; transform: rotate(45deg) translateY(-20px); }
+    50% { opacity: 1; transform: rotate(45deg) translateY(0); }
+    100% { opacity: 0; transform: rotate(45deg) translateY(20px); }
+}
+
+/* Video Section */
+.video-section {
+    padding: 3rem 1rem;
+    text-align: center;
+    background: #fff5f5;
+}
+
+.video-section video {
+    width: 100%;
+    max-height: 80vh;
+    object-fit: cover;
+    display: block;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Save the Date */
+.save-the-date {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #fff0f0;
+    background-image: url('images/floral-pattern-light.png');
+    background-repeat: repeat;
+    background-position: center;
+    background-size: 150px;
+    border-radius: 15px;
+    margin: 2.5rem auto;
+    max-width: 900px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* Decorative borders for Save the Date section */
+.save-the-date::before,
+.save-the-date::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #e0a3af, transparent);
+}
+.save-the-date::before { top: 20px; }
+.save-the-date::after { bottom: 20px; }
+
+.save-the-date h3 {
+    font-size: 1.75rem;
+    color: #cc5c8a;
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+}
+
+.save-the-date h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    color: #6a3f3f;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: inline-block;
+}
+.save-the-date h2::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    background: #cc5c8a;
+    left: 50%;
+    bottom: -5px;
+    transform: translateX(-50%);
+    transition: width 0.3s ease-in-out;
+}
+.save-the-date h2:hover::after { width: 100%; }
+
+.save-the-date-text {
+    font-size: 1.3rem;
+    margin: 0.75rem 0;
+    font-weight: 400;
+}
+
+.save-the-date p {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+}
+
+.save-the-date .date {
+    font-style: italic;
+    color: #a15050;
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
+}
+
+/* Countdown Timer Styling */
+.countdown-wrapper {
+    padding: 1.5rem 0;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    margin: 2rem auto 0;
+    max-width: 600px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.timer {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    font-size: 1.75rem;
+    flex-wrap: wrap;
+}
+
+.timer div {
+    background: #ffe0e6;
+    padding: 1.2rem;
+    border-radius: 10px;
+    min-width: 90px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.timer div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.timer span {
+    display: block;
+    font-weight: bold;
+    font-size: 2.5rem;
+    color: #884444;
+}
+
+.timer-label {
+    display: block;
+    font-size: 0.8rem;
+    color: #777;
+    margin-top: 0.3rem;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/* Couple Info */
+.couple-info {
+    background: url('images/floral-pattern.png') repeat center center;
+    background-color: #fcf4f4;
+    background-size: contain;
+    padding: 3rem 2rem;
+    text-align: center;
+    border-top: 5px double #f0dada;
+    border-bottom: 5px double #f0dada;
+}
+
+.couple-info h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 4.5rem;
+    color: #a45b5b;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+}
+
+.couple-info h2 span {
+    color: #c75f75;
+    font-weight: bold;
+}
+
+.divider {
+    margin: 1rem auto;
+    max-height: 100px;
+    width: 300px;
+    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.2));
+}
+
+.couple-pics {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.person {
+    text-align: center;
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Initial state for JS animation */
+    opacity: 0;
+    transform: translateY(20px);
+}
+.person.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+.person:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+}
+
+.person-name {
+    font-size: 1.6rem;
+    color: #c4827c;
+    font-weight: bold;
+    margin-bottom: 0.75rem;
+    font-family: 'Dancing Script', cursive;
+}
+
+.person img {
+    width: 100%;
+    max-width: 220px;
+    border-radius: 50%;
+    border: 5px solid #fce8e8;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+    transition: border-color 0.3s ease, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.person img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-color: #e0a3af;
+}
+
+/* --- Functions Section (Wedding & Reception Details) --- */
+.functions-section {
+    text-align: center;
+    padding: 3.5rem 1rem;
+    background-color: #f9f9f9;
+}
+
+.functions-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: #6a3f3f;
+    letter-spacing: 5px;
+    margin-bottom: 1.2rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.functions-divider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.line {
+    height: 3px;
+    width: 70px;
+    background-color: #b85c66;
+}
+
+.diamond {
+    width: 15px;
+    height: 15px;
+    background-color: #e07a8a;
+    transform: rotate(45deg);
+    border-radius: 2px;
+}
+
+.event-cards-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2.5rem;
+    margin-top: 3rem;
+    max-width: 900px; /* Limit wrapper width */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.event-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 380px; /* Max width for individual cards */
+    width: 100%;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column; /* Stack image and info vertically */
+    /* Initial state for JS animation */
+    opacity: 0;
+    transform: translateY(20px);
+}
+.event-card.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.event-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+.event-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-bottom: 3px solid var(--secondary-color);
+}
+
+.event-info {
+    padding: 1.8rem;
+    text-align: center;
+    flex-grow: 1; /* Allows info section to take available space */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distributes content evenly */
+}
+
+.event-info h3 {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    color: #8a3f3f;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+}
+
+.event-info p {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+.event-info .event-date {
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.event-info .event-venue {
+    font-style: italic;
+    margin-top: 1rem;
+    color: #555;
+}
+
+.map-btn {
+    display: inline-block;
+    background-color: #d46a6a;
+    color: white;
+    padding: 0.8rem 1.8rem;
+    border-radius: 5px;
+    margin-top: 1.5rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.map-btn:hover {
+    background-color: #c05c5c;
+    transform: translateY(-2px);
+}
+
+
+/* Scroll Top Button */
+.scroll-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #d43f3f;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    line-height: 50px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scroll-top:hover {
+    background-color: #b83232;
+    transform: translateY(-3px);
+}
+
+/* Footer Invite */
+.footer-invite {
+    text-align: center;
+    background: #fdf5f5;
+    padding: 3.5rem 1rem;
+    font-size: 1.6rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: bold;
+    color: #a03a3a;
+    border-top: 2px dotted #ccc;
+    border-bottom: 2px dotted #ccc;
+    background-image: url('images/invite-bg.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.footer-invite p {
+    color: #666;
+    font-family: 'Roboto', sans-serif;
+}
+
+.footer-invite h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: #d43f3f;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.footer-thanks {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: #777;
+    margin-top: 1rem;
+}
+
+/* Responsive Design */
+@media (min-width: 769px) {
+    .event-cards-wrapper {
+        flex-direction: row; /* Side-by-side on larger screens */
+        justify-content: center;
+        align-items: stretch; /* Make cards have equal height */
+    }
+    .event-card {
+        width: 48%; /* Adjust width to fit two cards with gap */
+        max-width: 400px; /* Max width for individual cards */
+    }
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 3rem;
+    }
+
+    .hero-text .tagline {
+        font-size: 1.2rem;
+    }
+
+    .hero-text .date {
+        font-size: 1.5rem;
+    }
+
+    .carousel-container {
+        height: 500px; /* UPDATED: Adjusted height for medium screens */
+    }
+
+    .save-the-date {
+        padding: 3rem 1rem;
+    }
+    .save-the-date h2 {
+        font-size: 2.5rem;
+    }
+    .save-the-date .date {
+        font-size: 1.2rem;
+    }
+
+    .countdown-wrapper {
+        padding: 1rem 0;
+        margin: 1.5rem auto 0;
+    }
+
+    .timer {
+        font-size: 1.5rem;
+        gap: 1.5rem;
+    }
+
+    .timer div {
+        padding: 1rem;
+        min-width: 80px;
+    }
+
+    .couple-info h2 {
+        font-size: 3.5rem;
+    }
+
+    .person img {
+        max-width: 180px;
+    }
+
+    .person-name {
+        font-size: 1.2rem;
+    }
+
+    .footer-invite{
+        font-size: 1.4rem;
+    }
+
+    /* Adjustments for event cards on medium screens */
+    .event-card {
+        height: auto; /* Allow height to adjust based on content */
+    }
+    .event-card .event-image {
+        height: 200px; /* Smaller image height on medium screens */
+    }
+    .event-info {
+        padding: 1.2rem;
+    }
+    .event-info h3 {
+        font-size: 1.8rem;
+    }
+    .event-date, .event-time, .event-venue {
+        font-size: 1rem;
+    }
+    .map-btn {
+        font-size: 0.9rem;
+        padding: 0.4rem 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-image {
+        max-width: 90%;
+    }
+
+    .hero h1 {
+        font-size: 2.8rem; /* Adjusted for smaller screens */
+    }
+
+    .hero-text .tagline {
+        font-size: 1rem;
+    }
+
+    .hero-text .date {
+        font-size: 1.3rem;
+    }
+
+    .carousel-container {
+        height: 400px; /* UPDATED: Adjusted height for small screens */
+    }
+
+    .save-the-date {
+        padding: 2.5rem 0.5rem;
+    }
+    .save-the-date h2 {
+        font-size: 2rem;
+    }
+    .save-the-date-text {
+        font-size: 1.1rem;
+    }
+    .save-the-date .date {
+        font-size: 1.1rem;
+    }
+
+    .countdown-wrapper {
+        padding: 0.8rem 0;
+        margin: 1rem auto 0;
+    }
+
+    .timer {
+        font-size: 1.2rem;
+        gap: 0.8rem;
+    }
+    .timer div{
+        padding: 0.8rem;
+        min-width: 70px;
+    }
+    .timer span {
+        font-size: 2rem;
+    }
+
+    .couple-info h2 {
+        font-size: 3rem;
+    }
+
+    .person img {
+        max-width: 150px;
+    }
+
+    .footer-invite{
+        font-size: 1.2rem;
+    }
+    .footer-invite h3 {
+        font-size: 2rem;
+    }
+
+    .scroll-top {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
+
+    /* Further adjustments for event cards on small screens */
+    .event-card .event-image {
+        height: 180px; /* Even smaller image height on small screens */
+        border-radius: 8px 8px 0 0;
+    }
+    .event-info {
+        padding: 1rem;
+    }
+    .event-info h3 {
+        font-size: 1.6rem;
+    }
+    .event-date, .event-time, .event-venue {
+        font-size: 0.9rem;
+    }
+    .map-btn {
+        font-size: 0.8rem;
+        padding: 0.3rem 0.8rem;
+        margin-top: 0.8rem;
+    }
+}
+/* --- Gallery Section (Masonry Layout) --- */
+.gallery-section {
+    text-align: center;
+    padding: 60px 0;
+}
+
+.gallery-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: #a03a3a;
+    margin-bottom: 20px;
+}
+
+.gallery-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+.masonry-container {
+    column-count: 3;           /* Adjust number of columns as needed */
+    column-gap: 15px;         /* Space between columns */
+    margin: 0 auto;
+    max-width: 1200px;        /* Maximum width of the gallery */
+}
+
+.masonry-item {
+    margin-bottom: 15px;      /* Space between items */
+    break-inside: avoid;     /* Prevent images from breaking across columns */
+}
+
+.masonry-item img {
+    width: 100%;             /* Make image fill column width */
+    height: auto;            /* Maintain aspect ratio */
+    display: block;          /* Remove extra space below image */
+    border-radius: 8px;    /* Optional: Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  /* Subtle shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+.masonry-item img:hover {
+    transform: translateY(-5px);  /* Slight lift on hover */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
+}
+
+/* Responsive adjustments for smaller screens (adjust as needed) */
+@media (max-width: 992px) {
+    .masonry-container {
+        column-count: 2;   /* Two columns on medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .masonry-container {
+        column-count: 1;   /* One column on small screens */
+    }
+    .gallery-section h2{
+        font-size: 2.5rem;
+    }
+}

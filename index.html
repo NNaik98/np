@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="images/favicon.png" type="image/png" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&family=Roboto:wght@400;700&display=swap">
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
 </head>
 <body>
     <section id="hero" class="hero">
@@ -28,12 +30,14 @@
             <span></span>
         </div>
     </section>
+
     <section class="video-section animate-slide-up" id="video-section">
         <video autoplay muted loop controls>
             <source src="video/engagement.mp4" type="video/mp4" />
             Your browser does not support the video tag.
         </video>
     </section>
+
     <section class="save-the-date animate-fade-in">
         <h3>#NiVya</h3>
         <h2>Nitesh & Pallavi</h2>
@@ -48,6 +52,7 @@
             </div>
         </div>
     </section>
+
     <section class="couple-info animate-slide-up">
         <h2>Nitesh <span>Weds</span> Pallavi</h2>
         <img src="images/f1.png" alt="floral" class="divider" />
@@ -62,6 +67,7 @@
             </div>
         </div>
     </section>
+
     <section class="functions-section animate-fade-in" id="events">
         <h2>FUNCTIONS</h2>
         <div class="functions-divider">
@@ -94,6 +100,7 @@
             </div>
         </div>
     </section>
+
     <section class="functions-section animate-fade-in">
         <div class="functions-divider">
             <span class="line"></span>
@@ -103,30 +110,58 @@
             <span class="line"></span>
         </div>
     </section>
-    <section class="gallery-section animate-fade-in">
+
+    <section class="gallery-section animate-fade-in" id="desktop-gallery">
         <h2>Our Moments</h2>
         <p class="gallery-subtitle">A collection of cherished memories leading up to our big day.</p>
         <div class="masonry-container">
-            <div class="grid-item"><img src="images/r1.jpeg" alt="Landscape 1"></div>
-            <div class="grid-item"><img src="images/r2.jpeg" alt="Portrait 1"></div>
-            <div class="grid-item"><img src="images/DSM_5121.JPG" alt="Square 1"></div>
-            <div class="grid-item"><img src="images/DSM_4784.JPG" alt="Landscape 2"></div>
-            <div class="grid-item"><img src="images/DSM_4826.JPG" alt="Portrait 2"></div>
-            <div class="grid-item"><img src="images/DSM_4871.JPG" alt="Landscape 3"></div>
-            <div class="grid-item"><img src="images/DSM_4872.JPG" alt="Portrait 3"></div>
-            <div class="grid-item"><img src="images/DSM_4877.JPG" alt="Portrait 3"></div>
-            <div class="grid-item"><img src="images/DSM_4884.JPG" alt="Portrait 3"></div>
-            <div class="grid-item"><img src="images/DSM_5217.JPG" alt="Portrait 3"></div>
-            <div class="grid-item"><img src="images/DSM_5218.JPG" alt="Portrait 3"></div>
-            <div class="grid-item"><img src="images/DSM_4891.JPG" alt="Portrait 3"></div>
+            <div class="grid-item"><img src="images/r1.jpeg" alt="Couple portrait"></div>
+            <div class="grid-item"><img src="images/DSM_5121.JPG" alt="Engagement photo"></div>
+            <div class="grid-item"><img src="images/DSM_4784.JPG" alt="Wedding preparation"></div>
+            <div class="grid-item"><img src="images/DSM_4826.JPG" alt="Ceremony moment"></div>
+            <div class="grid-item"><img src="images/DSM_4871.JPG" alt="Bride and groom smiling"></div>
+            <div class="grid-item"><img src="images/DSM_4872.JPG" alt="Candid moment"></div>
+            <div class="grid-item"><img src="images/DSM_4877.JPG" alt="Happy couple"></div>
+            <div class="grid-item"><img src="images/DSM_4884.JPG" alt="Pre-wedding shoot"></div>
+            <div class="grid-item"><img src="images/DSM_5217.JPG" alt="Wedding rings"></div>
+            <div class="grid-item"><img src="images/DSM_5218.JPG" alt="Detailed shot"></div>
+            <div class="grid-item"><img src="images/DSM_4891.JPG" alt="Celebration photo"></div>
+            <div class="grid-item"><img src="images/r2.jpeg" alt="Another couple portrait"></div>
         </div>
     </section>
+
+    <section class="mobile-gallery-section animate-fade-in" id="mobile-gallery">
+        <h2>Our Moments</h2>
+        <p class="gallery-subtitle">A collection of cherished memories leading up to our big day.</p>
+        <div class="carousel-container-mobile">
+            <div class="carousel-images-mobile">
+                <img src="images/r1.jpeg" alt="Couple portrait" class="carousel-image-mobile">
+                <img src="images/DSM_5121.JPG" alt="Engagement photo" class="carousel-image-mobile">
+                <img src="images/DSM_4784.JPG" alt="Wedding preparation" class="carousel-image-mobile">
+                <img src="images/DSM_4826.JPG" alt="Ceremony moment" class="carousel-image-mobile">
+                <img src="images/DSM_4871.JPG" alt="Bride and groom smiling" class="carousel-image-mobile">
+                <img src="images/DSM_4872.JPG" alt="Candid moment" class="carousel-image-mobile">
+                <img src="images/DSM_4877.JPG" alt="Happy couple" class="carousel-image-mobile">
+                <img src="images/DSM_4884.JPG" alt="Pre-wedding shoot" class="carousel-image-mobile">
+                <img src="images/DSM_5217.JPG" alt="Wedding rings" class="carousel-image-mobile">
+                <img src="images/DSM_5218.JPG" alt="Detailed shot" class="carousel-image-mobile">
+                <img src="images/DSM_4891.JPG" alt="Celebration photo" class="carousel-image-mobile">
+                <img src="images/r2.jpeg" alt="Another couple portrait" class="carousel-image-mobile">
+            </div>
+            <button class="carousel-prev-mobile">❮</button>
+            <button class="carousel-next-mobile">❯</button>
+            <div class="carousel-dots-mobile"></div>
+        </div>
+    </section>
+
     <footer class="footer-invite">
         <p>With Love,</p>
         <h3>Nitesh & Pallavi</h3>
-        <p class="footer-thanks">/Thank you for being a part of our journey /❤️</p>
+        <p class="footer-thanks">Thank you for being a part of our journey ❤️</p>
     </footer>
+
     <button class="scroll-top">↑</button>
+
     <script src="script.js"></script>
 </body>
 </html>

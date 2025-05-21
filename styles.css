@@ -644,9 +644,6 @@ h3 {
     .hero-text .date {
         font-size: 1.5rem;
     }
-    .carousel-container {
-        height: 500px;
-    }
     .save-the-date {
         padding: 3rem 1rem;
     }
@@ -713,9 +710,6 @@ h3 {
     .hero-text .date {
         font-size: 1.3rem;
     }
-    .carousel-container {
-        height: 400px;
-    }
     .save-the-date {
         padding: 2.5rem 0.5rem;
     }
@@ -779,30 +773,23 @@ h3 {
         margin-top: 0.8rem;
     }
 }
-.gallery-section {
-    text-align: center;
-    padding: 60px 0;
-}
-.gallery-section h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem;
-    color: #a03a3a;
-    margin-bottom: 20px;
-}
-.gallery-subtitle {
-    font-size: 1.1rem;
-    color: #666;
-    margin-bottom: 40px;
-}
+
+/* --- Gallery Specific Styles --- */
+
+/* Masonry for Desktop (Default) */
 .masonry-container {
-    column-count: 3;
-    column-gap: 15px;
-    margin: 0 auto;
     max-width: 1200px;
+    margin: 0 auto;
 }
 .grid-item {
+    width: calc(33.333% - 10px);
     margin-bottom: 15px;
-    break-inside: avoid;
+    float: left;
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0;
+}
+.grid-item.show {
+    opacity: 1;
 }
 .grid-item img {
     width: 100%;
@@ -816,16 +803,108 @@ h3 {
     transform: translateY(-5px);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
-@media (max-width: 992px) {
-    .masonry-container {
-        column-count: 2;
-    }
+.gallery-section::after {
+    content: "";
+    display: table;
+    clear: both;
 }
+
+/* Mobile Carousel Styles */
+.carousel-container-mobile {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto 30px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    background-color: #fff;
+}
+
+.carousel-images-mobile {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-image-mobile {
+    min-width: 100%;
+    height: 300px;
+    object-fit: contain;
+    display: none;
+    border-radius: 10px;
+}
+.carousel-image-mobile.active {
+    display: block;
+}
+
+.carousel-prev-mobile, .carousel-next-mobile {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    z-index: 10;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-prev-mobile {
+    left: 10px;
+}
+
+.carousel-next-mobile {
+    right: 10px;
+}
+
+.carousel-prev-mobile:hover, .carousel-next-mobile:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.carousel-dots-mobile {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    z-index: 10;
+}
+
+.dot-mobile {
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.dot-mobile.active {
+    background-color: white;
+    transform: scale(1.2);
+}
+
+/* Responsive Display Logic */
+.mobile-gallery-section {
+    display: none;
+}
+.gallery-section {
+    display: block;
+}
+
 @media (max-width: 768px) {
-    .masonry-container {
-        column-count: 1;
+    .mobile-gallery-section {
+        display: block;
     }
-    .gallery-section h2{
-        font-size: 2.5rem;
+    .gallery-section {
+        display: none;
+    }
+    .grid-item {
+        width: 100%;
+        float: none;
     }
 }

@@ -24,59 +24,85 @@ document.addEventListener('DOMContentLoaded', () => {
     const countdownInterval = setInterval(updateCountdown, 1000);
     updateCountdown();
 
-    // This selector is crucial. Now, .gallery-subtitle (with animate-fade-in)
-    // will be observed and receive the 'show' class.
-    const sections = document.querySelectorAll('section, .hero-image, .hero-text, .hero-button, .event-card, .person, .grid-item, footer, .animate-fade-in, .animate-slide-up');
+    // --- Hero Section Animations (Immediate on Load) ---
+    // These elements are visible when the page first loads, so we give them
+    // the 'show' class immediately to trigger their entrance animations.
+    const heroImage = document.querySelector('.hero-image');
+    const heroText = document.querySelector('.hero-text');
+    const heroButton = document.querySelector('.hero-button');
+    const scrollDownIndicator = document.querySelector('.scroll-down-indicator');
+
+    // Add 'show' class to hero elements immediately on DOMContentLoaded
+    if (heroImage) heroImage.classList.add('show');
+    if (heroText) heroText.classList.add('show');
+    if (heroButton) heroButton.classList.add('show');
+    if (scrollDownIndicator) scrollDownIndicator.classList.add('show'); // This triggers the arrow animation
+
+    // Intersection Observer for other animations
+    const observerOptions = {
+        root: null, // The viewport is the root
+        rootMargin: '0px', // No extra margin around the viewport
+        threshold: 0.1 // Trigger when 10% of the element is visible
+    };
 
     const animateElements = (entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('show');
-                observer.unobserve(entry.target);
+                observer.unobserve(entry.target); // Stop observing once it has animated
             }
         });
     };
 
-    const observer = new IntersectionObserver(animateElements, {
-        threshold: 0.1
+    const observer = new IntersectionObserver(animateElements, observerOptions);
+
+    // Select all elements that need to animate on scroll.
+    // Explicitly select all relevant sections and animate classes,
+    // ensuring hero elements are NOT re-observed here as they are handled above.
+    document.querySelectorAll(
+        'section:not(.hero), .event-card, .person, .grid-item, footer, .family-card, .animate-fade-in:not(.hero-image):not(.hero-button), .animate-slide-up:not(.hero-text)'
+    ).forEach(element => {
+        observer.observe(element);
     });
 
-    sections.forEach(section => {
-        observer.observe(section);
-    });
-
+    // --- Scroll-to-top button logic ---
     const scrollTopButton = document.querySelector('.scroll-top');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 300) {
-            scrollTopButton.classList.add('show');
-        } else {
-            scrollTopButton.classList.remove('show');
-        }
-    });
-
-    scrollTopButton.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+    if (scrollTopButton) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) { // Show button after scrolling 300px
+                scrollTopButton.classList.add('show');
+            } else {
+                scrollTopButton.classList.remove('show');
+            }
         });
-    });
 
-    const heroButton = document.querySelector('.hero-button');
-    if (heroButton) {
-        heroButton.addEventListener('click', (e) => {
+        scrollTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Smooth scroll to the top
+            });
+        });
+    }
+
+    // --- Smooth scroll for hero button ---
+    const heroButtonScroll = document.querySelector('.hero-button');
+    if (heroButtonScroll) { // Renamed to avoid conflict with `heroButton` variable
+        heroButtonScroll.addEventListener('click', (e) => {
             e.preventDefault();
-            const targetId = heroButton.getAttribute('href');
+            const targetId = heroButtonScroll.getAttribute('href');
             document.querySelector(targetId).scrollIntoView({
                 behavior: 'smooth'
             });
         });
     }
 
-    const scrollDownIndicator = document.querySelector('.scroll-down-indicator');
-    if (scrollDownIndicator) {
-        scrollDownIndicator.addEventListener('click', (e) => {
+    // --- Smooth scroll for scroll-down-indicator ---
+    const scrollDownIndicatorElement = document.querySelector('.scroll-down-indicator'); // Renamed to avoid conflict
+    if (scrollDownIndicatorElement) {
+        scrollDownIndicatorElement.addEventListener('click', (e) => {
             e.preventDefault();
-            const targetSection = document.getElementById('save-the-date');
+            // Assuming you want it to scroll to the video-section, or save-the-date
+            const targetSection = document.getElementById('video-section'); // Or 'save-the-date' if you prefer
             if (targetSection) {
                 targetSection.scrollIntoView({
                     behavior: 'smooth'
@@ -85,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- Masonry Layout for Desktop Gallery ---
     if (document.querySelector('.masonry-container')) {
         imagesLoaded(document.querySelector('.masonry-container'), function() {
             new Masonry('.masonry-container', {
@@ -96,9 +123,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- Mobile Gallery Carousel Logic ---
     const carouselContainerMobile = document.querySelector('.carousel-container-mobile');
 
-    let currentIndex = 0;
+    let currentCarouselIndex = 0; // Changed variable name to avoid conflict
 
     const createDots = (images, dotsContainer) => {
         dotsContainer.innerHTML = '';
@@ -116,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateDots = (dotsContainer) => {
         const dots = dotsContainer.querySelectorAll('.dot-mobile');
         dots.forEach((dot, index) => {
-            if (index === currentIndex) {
+            if (index === currentCarouselIndex) {
                 dot.classList.add('active');
             } else {
                 dot.classList.remove('active');
@@ -131,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 img.classList.add('active');
             }
         });
-        currentIndex = index;
+        currentCarouselIndex = index;
         updateDots(dotsContainer);
     };
 
@@ -143,16 +171,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const dotsContainer = carouselContainerMobile.querySelector('.carousel-dots-mobile');
 
         createDots(images, dotsContainer);
-        showImage(0, images, dotsContainer);
+        showImage(0, images, dotsContainer); // Show the first image initially
 
         prevBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
-            showImage(currentIndex, images, dotsContainer);
+            currentCarouselIndex = (currentCarouselIndex > 0) ? currentCarouselIndex - 1 : images.length - 1;
+            showImage(currentCarouselIndex, images, dotsContainer);
         });
 
         nextBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
-            showImage(currentIndex, images, dotsContainer);
+            currentCarouselIndex = (currentCarouselIndex < images.length - 1) ? currentCarouselIndex + 1 : 0;
+            showImage(currentCarouselIndex, images, dotsContainer);
         });
+
+        // Auto-advance carousel (optional, you had this in your original script)
+        setInterval(() => {
+            currentCarouselIndex = (currentCarouselIndex < images.length - 1) ? currentCarouselIndex + 1 : 0;
+            showImage(currentCarouselIndex, images, dotsContainer);
+        }, 5000); // Change image every 5 seconds
     }
 });

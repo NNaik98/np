@@ -217,7 +217,12 @@ h3 {
     transform: rotate(45deg);
     margin: 3px;
     animation: scrollDown 1.5s infinite;
-    opacity: 0;
+    opacity: 0; /* Ensures the arrow is initially hidden and animated in by JS */
+}
+/* Ensure the scroll-down-indicator spans also get 'show' class for animation on load */
+.scroll-down-indicator.show span {
+    opacity: 1;
+    animation: scrollDown 1.5s infinite; /* Keep animation after 'show' class */
 }
 .scroll-down-indicator span:nth-child(1) { animation-delay: 0.1s; }
 .scroll-down-indicator span:nth-child(2) { animation-delay: 0.3s; }
@@ -449,6 +454,89 @@ h3 {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     border-color: #e0a3af;
 }
+
+/* --- NEW FAMILY SECTION STYLES START --- */
+.family-section {
+    padding: 60px 20px;
+    background-color: var(--bg-light);
+    border-top: 2px dashed var(--secondary-color);
+    border-bottom: 2px dashed var(--secondary-color);
+}
+
+.family-section h2 {
+    color: var(--primary-color);
+    font-size: 3rem;
+    margin-bottom: 40px;
+}
+
+.family-cards-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.family-card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    padding: 25px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0; /* Initial state for animation */
+    transform: translateY(20px); /* Initial state for animation */
+}
+
+.family-card.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.family-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+}
+
+.family-card h3 {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.family-card .family-desc {
+    font-family: var(--font-body);
+    font-size: 1.15rem;
+    color: var(--text-light);
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.family-card .family-desc strong {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.family-photo {
+    width: 100%;
+    height: 300px; /* Fixed height for consistency */
+    object-fit: cover; /* Ensures image covers the area */
+    border-radius: 10px;
+    border: 4px solid var(--secondary-color);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, transform 0.3s ease-in-out;
+}
+
+.family-photo:hover {
+    border-color: var(--primary-color);
+    transform: scale(1.02);
+}
+/* --- NEW FAMILY SECTION STYLES END --- */
+
 .functions-section {
     text-align: center;
     padding: 3.5rem 1rem;
@@ -703,6 +791,23 @@ h3 {
         font-size: 0.9rem;
         padding: 0.4rem 1rem;
     }
+    /* Responsive adjustments for family section */
+    .family-section h2 {
+        font-size: 2.5rem;
+    }
+    .family-card {
+        padding: 20px;
+        max-width: 350px;
+    }
+    .family-card h3 {
+        font-size: 1.8rem;
+    }
+    .family-card .family-desc {
+        font-size: 1rem;
+    }
+    .family-photo {
+        height: 250px;
+    }
 }
 @media (max-width: 480px) {
     .hero-image {
@@ -779,6 +884,25 @@ h3 {
         padding: 0.3rem 0.8rem;
         margin-top: 0.8rem;
     }
+    /* Responsive adjustments for family section */
+    .family-section h2 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+    .family-card {
+        padding: 15px;
+        border-radius: 10px;
+    }
+    .family-card h3 {
+        font-size: 1.6rem;
+    }
+    .family-card .family-desc {
+        font-size: 0.95rem;
+        margin-bottom: 15px;
+    }
+    .family-photo {
+        height: 200px;
+    }
 }
 
 /* --- Gallery Specific Styles --- */
@@ -830,11 +954,7 @@ h3 {
     margin-left: auto;
     margin-right: auto;
     font-weight: 400;
-    /* REMOVED: transition, transform, and opacity - now handled by animate-fade-in */
 }
-
-/* REMOVED: .gallery-subtitle.show rule - now handled by .animate-fade-in.show */
-
 
 /* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {

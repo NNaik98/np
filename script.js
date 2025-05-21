@@ -24,7 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const countdownInterval = setInterval(updateCountdown, 1000);
     updateCountdown();
 
-    const sections = document.querySelectorAll('section, .hero-image, .hero-text, .hero-button, .event-card, .person, .grid-item, footer');
+    // This selector is crucial. Now, .gallery-subtitle (with animate-fade-in)
+    // will be observed and receive the 'show' class.
+    const sections = document.querySelectorAll('section, .hero-image, .hero-text, .hero-button, .event-card, .person, .grid-item, footer, .animate-fade-in, .animate-slide-up');
+
     const animateElements = (entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -95,8 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const carouselContainerMobile = document.querySelector('.carousel-container-mobile');
 
-    // Declare carousel-related functions as function expressions here
-    let currentIndex = 0; // Initialize currentIndex at a higher scope if needed by other functions within this block
+    let currentIndex = 0;
 
     const createDots = (images, dotsContainer) => {
         dotsContainer.innerHTML = '';
@@ -141,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const dotsContainer = carouselContainerMobile.querySelector('.carousel-dots-mobile');
 
         createDots(images, dotsContainer);
-        showImage(0, images, dotsContainer); // Pass images and dotsContainer to showImage as well
+        showImage(0, images, dotsContainer);
 
         prevBtn.addEventListener('click', () => {
             currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;

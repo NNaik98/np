@@ -160,7 +160,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         currentCarouselIndex = index;
-        updateDots(dotsContainer);
+        if (dotsContainer) { // Check if dotsContainer exists before calling updateDots
+            updateDots(dotsContainer);
+        }
     };
 
     if (carouselContainerMobile) {
@@ -170,23 +172,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const nextBtn = carouselContainerMobile.querySelector('.carousel-next-mobile');
         const dotsContainer = carouselContainerMobile.querySelector('.carousel-dots-mobile');
 
-        createDots(images, dotsContainer);
-        showImage(0, images, dotsContainer); // Show the first image initially
+        if (images.length > 0) { // Only initialize carousel if there are images
+            createDots(images, dotsContainer);
+            showImage(0, images, dotsContainer); // Show the first image initially
 
-        prevBtn.addEventListener('click', () => {
-            currentCarouselIndex = (currentCarouselIndex > 0) ? currentCarouselIndex - 1 : images.length - 1;
-            showImage(currentCarouselIndex, images, dotsContainer);
-        });
+            prevBtn.addEventListener('click', () => {
+                currentCarouselIndex = (currentCarouselIndex > 0) ? currentCarouselIndex - 1 : images.length - 1;
+                showImage(currentCarouselIndex, images, dotsContainer);
+            });
 
-        nextBtn.addEventListener('click', () => {
-            currentCarouselIndex = (currentCarouselIndex < images.length - 1) ? currentCarouselIndex + 1 : 0;
-            showImage(currentCarouselIndex, images, dotsContainer);
-        });
+            nextBtn.addEventListener('click', () => {
+                currentCarouselIndex = (currentCarouselIndex < images.length - 1) ? currentCarouselIndex + 1 : 0;
+                showImage(currentCarouselIndex, images, dotsContainer);
+            });
 
-        // Auto-advance carousel (optional, you had this in your original script)
-        setInterval(() => {
-            currentCarouselIndex = (currentCarouselIndex < images.length - 1) ? currentCarouselIndex + 1 : 0;
-            showImage(currentCarouselIndex, images, dotsContainer);
-        }, 5000); // Change image every 5 seconds
+            // Auto-advance carousel (optional, you had this in your original script)
+            setInterval(() => {
+                currentCarouselIndex = (currentCarouselIndex < images.length - 1) ? currentCarouselIndex + 1 : 0;
+                showImage(currentCarouselIndex, images, dotsContainer);
+            }, 5000); // Change image every 5 seconds
+        }
     }
 });

@@ -217,12 +217,11 @@ h3 {
     transform: rotate(45deg);
     margin: 3px;
     animation: scrollDown 1.5s infinite;
-    opacity: 0; /* Ensures the arrow is initially hidden and animated in by JS */
+    opacity: 0;
 }
-/* Ensure the scroll-down-indicator spans also get 'show' class for animation on load */
 .scroll-down-indicator.show span {
     opacity: 1;
-    animation: scrollDown 1.5s infinite; /* Keep animation after 'show' class */
+    animation: scrollDown 1.5s infinite;
 }
 .scroll-down-indicator span:nth-child(1) { animation-delay: 0.1s; }
 .scroll-down-indicator span:nth-child(2) { animation-delay: 0.3s; }
@@ -240,7 +239,6 @@ h3 {
     50% { opacity: 1; transform: rotate(45deg) translateY(0); }
     100% { opacity: 0; transform: rotate(45deg) translateY(20px); }
 }
-/* These animate classes now correctly handle opacity and transform for animated elements */
 .animate-slide-up {
     opacity: 0;
     transform: translateY(50px);
@@ -271,7 +269,6 @@ h3 {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 .save-the-date {
-    text-align: center;
     padding: 4rem 2rem;
     background: #fff0f0;
     background-image: url('images/floral-pattern-light.png');
@@ -441,7 +438,8 @@ h3 {
 }
 .person img {
     width: 100%;
-    max-width: 220px;
+    max-width: 250px;
+    height: auto;
     border-radius: 50%;
     border: 5px solid #fce8e8;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
@@ -454,21 +452,31 @@ h3 {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     border-color: #e0a3af;
 }
-
-/* --- NEW FAMILY SECTION STYLES START --- */
 .family-section {
     padding: 60px 20px;
     background-color: var(--bg-light);
     border-top: 2px dashed var(--secondary-color);
     border-bottom: 2px dashed var(--secondary-color);
 }
-
 .family-section h2 {
     color: var(--primary-color);
     font-size: 3rem;
     margin-bottom: 40px;
 }
-
+.family-subtitle {
+    font-family: var(--font-heading);
+    font-size: 1.4em;
+    color: var(--text-light);
+    text-align: center;
+    margin-top: -20px;
+    margin-bottom: 40px;
+    padding: 0 20px;
+    line-height: 1.5;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 400;
+}
 .family-cards-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -477,66 +485,77 @@ h3 {
     max-width: 900px;
     margin: 0 auto;
 }
-
 .family-card {
     background: #fff;
     border-radius: 15px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     padding: 25px;
     text-align: center;
-    max-width: 400px;
-    width: 100%;
+    width: 380px;
+    max-width: 380px;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    opacity: 0; /* Initial state for animation */
-    transform: translateY(20px); /* Initial state for animation */
+    opacity: 0;
+    transform: translateY(20px);
 }
-
 .family-card.show {
     opacity: 1;
     transform: translateY(0);
 }
-
 .family-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
 }
-
 .family-card h3 {
     font-family: var(--font-heading);
     font-size: 2.2rem;
     color: var(--primary-color);
     margin-bottom: 15px;
 }
-
 .family-card .family-desc {
     font-family: var(--font-body);
     font-size: 1.15rem;
     color: var(--text-light);
     margin-bottom: 20px;
     line-height: 1.5;
+    word-wrap: break-word;
+    max-width: 90%;
 }
-
-.family-card .family-desc strong {
+.family-card .parent-names {
+    font-family: var(--font-accent);
+    font-size: 1.3em;
     color: var(--primary-color);
     font-weight: 700;
+    display: inline;
+    white-space: normal;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
-
-.family-photo {
+.family-photo-wrapper {
     width: 100%;
-    height: 300px; /* Fixed height for consistency */
-    object-fit: cover; /* Ensures image covers the area */
+    max-width: 250px;
+    margin: auto;
+    flex-shrink: 0;
+    aspect-ratio: 1 / 1;
     border-radius: 10px;
+    overflow: hidden;
     border: 4px solid var(--secondary-color);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: border-color 0.3s ease, transform 0.3s ease-in-out;
 }
-
-.family-photo:hover {
+.family-photo-wrapper:hover {
     border-color: var(--primary-color);
     transform: scale(1.02);
 }
-/* --- NEW FAMILY SECTION STYLES END --- */
-
+.family-photo-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+}
 .functions-section {
     text-align: center;
     padding: 3.5rem 1rem;
@@ -761,7 +780,7 @@ h3 {
         font-size: 3.5rem;
     }
     .person img {
-        max-width: 180px;
+        max-width: 200px;
     }
     .person-name {
         font-size: 1.2rem;
@@ -791,13 +810,20 @@ h3 {
         font-size: 0.9rem;
         padding: 0.4rem 1rem;
     }
-    /* Responsive adjustments for family section */
     .family-section h2 {
         font-size: 2.5rem;
+        margin-bottom: 30px;
+    }
+    .family-subtitle {
+        font-size: 1.2em;
+        margin-bottom: 30px;
+        margin-top: -10px;
     }
     .family-card {
-        padding: 20px;
+        width: 100%;
         max-width: 350px;
+        min-height: auto;
+        padding: 20px;
     }
     .family-card h3 {
         font-size: 1.8rem;
@@ -805,8 +831,11 @@ h3 {
     .family-card .family-desc {
         font-size: 1rem;
     }
-    .family-photo {
-        height: 250px;
+    .family-card .parent-names {
+        font-size: 1.1em;
+    }
+    .family-photo-wrapper {
+        max-width: 200px;
     }
 }
 @media (max-width: 480px) {
@@ -853,7 +882,7 @@ h3 {
         font-size: 3rem;
     }
     .person img {
-        max-width: 150px;
+        max-width: 160px;
     }
     .footer-invite{
         font-size: 1.2rem;
@@ -884,10 +913,15 @@ h3 {
         padding: 0.3rem 0.8rem;
         margin-top: 0.8rem;
     }
-    /* Responsive adjustments for family section */
     .family-section h2 {
         font-size: 2rem;
         margin-bottom: 30px;
+    }
+    .family-subtitle {
+        font-size: 1.1em;
+        margin-bottom: 25px;
+        padding: 0 15px;
+        margin-top: -5px;
     }
     .family-card {
         padding: 15px;
@@ -900,14 +934,13 @@ h3 {
         font-size: 0.95rem;
         margin-bottom: 15px;
     }
-    .family-photo {
-        height: 200px;
+    .family-card .parent-names {
+        font-size: 1em;
+    }
+    .family-photo-wrapper {
+        max-width: 160px;
     }
 }
-
-/* --- Gallery Specific Styles --- */
-
-/* Masonry for Desktop (Default) */
 .masonry-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -939,8 +972,6 @@ h3 {
     display: table;
     clear: both;
 }
-
-/* --- Gallery Subtitle Styling --- */
 .gallery-subtitle {
     font-family: var(--font-heading);
     font-size: 1.4em;
@@ -955,26 +986,6 @@ h3 {
     margin-right: auto;
     font-weight: 400;
 }
-
-/* Responsive adjustments for smaller screens */
-@media (max-width: 768px) {
-    .gallery-subtitle {
-        font-size: 1.2em;
-        margin-bottom: 30px;
-        margin-top: -10px;
-    }
-}
-
-@media (max-width: 480px) {
-    .gallery-subtitle {
-        font-size: 1.1em;
-        margin-bottom: 25px;
-        padding: 0 15px;
-        margin-top: -5px;
-    }
-}
-
-/* Mobile Carousel Styles */
 .carousel-container-mobile {
     position: relative;
     max-width: 400px;
@@ -984,92 +995,79 @@ h3 {
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     background-color: #fff;
 }
-
 .carousel-images-mobile {
     display: flex;
     transition: transform 0.5s ease-in-out;
 }
-
 .carousel-image-mobile {
     min-width: 100%;
     height: 300px;
     object-fit: contain;
+    background-color: #f0f0f0;
     display: none;
     border-radius: 10px;
 }
 .carousel-image-mobile.active {
     display: block;
 }
-
 .carousel-prev-mobile, .carousel-next-mobile {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0,0,0,0.5);
     color: white;
     border: none;
     padding: 10px 15px;
     cursor: pointer;
-    font-size: 1.5rem;
     border-radius: 5px;
+    font-size: 18px;
     z-index: 10;
     transition: background-color 0.3s ease;
 }
-
+.carousel-prev-mobile:hover, .carousel-next-mobile:hover {
+    background-color: rgba(0,0,0,0.7);
+}
 .carousel-prev-mobile {
     left: 10px;
 }
-
 .carousel-next-mobile {
     right: 10px;
 }
-
-.carousel-prev-mobile:hover, .carousel-next-mobile:hover {
-    background-color: rgba(0, 0, 0, 0.7);
-}
-
 .carousel-dots-mobile {
+    text-align: center;
+    padding: 10px 0;
     position: absolute;
-    bottom: 15px;
+    bottom: 10px;
     left: 0;
     right: 0;
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    z-index: 10;
 }
-
 .dot-mobile {
+    display: inline-block;
     width: 10px;
     height: 10px;
-    background-color: rgba(255, 255, 255, 0.5);
+    margin: 0 5px;
+    background-color: rgba(255,255,255,0.7);
     border-radius: 50%;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    border: 1px solid rgba(0,0,0,0.2);
 }
-
 .dot-mobile.active {
-    background-color: white;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
     transform: scale(1.2);
 }
-
-/* Responsive Display Logic */
-.mobile-gallery-section {
-    display: none;
-}
-.gallery-section {
+#desktop-gallery {
     display: block;
 }
-
+#mobile-gallery {
+    display: none;
+}
 @media (max-width: 768px) {
-    .mobile-gallery-section {
-        display: block;
-    }
-    .gallery-section {
+    #desktop-gallery {
         display: none;
     }
-    .grid-item {
-        width: 100%;
-        float: none;
+    #mobile-gallery {
+        display: block;
     }
 }
